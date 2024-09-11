@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import { Link } from "react-router-dom";
 import Loader from "./Loader";
-import connectionString from "./connString";
 
 export const RegisterCard = () => {
   const navigate = useNavigate();
@@ -16,12 +15,15 @@ export const RegisterCard = () => {
   const registerUser = async () => {
     setLoading(true);
     if (name && email && password && phone) {
-      const res = await axios.post(`${connectionString}/api/users/register/`, {
-        name,
-        email,
-        password,
-        phone,
-      });
+      const res = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/register/`,
+        {
+          name,
+          email,
+          password,
+          phone,
+        }
+      );
       if (res.data)
         if (res.data.ok == true) {
           navigate("/login");

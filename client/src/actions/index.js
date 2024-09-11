@@ -11,8 +11,6 @@ import {
   LOGIN_USER,
   LOGOUT_USER,
 } from "./actionTypes";
-import connectionString from "../components/connString";
-let Url = `${connectionString}/api/users/login`;
 
 export const setUser = (data) => {
   return {
@@ -65,9 +63,8 @@ export const emptyCart = (data) => {
 export const loginUser = (data) => {
   return async (dispatch) => {
     await axios
-      .post(Url, data)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/api/users/login`, data)
       .then((response) => {
-        console.log(response);
         toast.success("Logged in successfully");
         dispatch(setUser(response.data.user));
         localStorage.setItem("User", JSON.stringify(response.data));
@@ -96,9 +93,11 @@ export const getInitial = () => {
 //  }
 export const getInitialProducts = () => {
   return (dispatch) => {
-    axios.get(`${connectionString}/post/get-post/`).then((res) => {
-      dispatch(setProducts(res.data.post));
-    });
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/post/get-post/`)
+      .then((res) => {
+        dispatch(setProducts(res.data.post));
+      });
     //console.log(result);
 
     //dispatch(setProducts(result));
@@ -118,7 +117,7 @@ export const add = (obj) => {
 
   return (dispatch) => {
     axios
-      .post(`${connectionString}/post/add-to-cart/`, {
+      .post(`${process.env.REACT_APP_BACKEND_URL}/post/add-to-cart/`, {
         post: post,
         id: idd,
         total: total,
@@ -135,9 +134,12 @@ export const add = (obj) => {
 export const remove = (obj) => {
   return (dispatch) => {
     axios
-      .patch(`${connectionString}/post/remove-item/${obj.key}`, {
-        headers: obj.params,
-      })
+      .patch(
+        `${process.env.REACT_APP_BACKEND_URL}/post/remove-item/${obj.key}`,
+        {
+          headers: obj.params,
+        }
+      )
       .then((res) => {
         dispatch(removeFromCart(res.data.post));
       });
@@ -146,7 +148,7 @@ export const remove = (obj) => {
 export const getInitialDataCartData = (obj) => {
   return (dispatch) => {
     axios
-      .get(`${connectionString}/post/get-cart-items/${obj}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/post/get-cart-items/${obj}`)
       .then((res) => dispatch(cartData(res.data.cartItems)));
   };
 };

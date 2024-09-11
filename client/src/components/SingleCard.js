@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
-import connectionString from "./connString";
 
 export const SingleCard = ({ params, user, loading, setLoading }) => {
   const [postt, setPostt] = useState();
@@ -17,7 +16,9 @@ export const SingleCard = ({ params, user, loading, setLoading }) => {
     }
 
     axios
-      .get(`${connectionString}/post/get-single-post/${params.id}`)
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/post/get-single-post/${params.id}`
+      )
       .then((res) => {
         setPostt(res.data.post);
         setLoadingg(false);

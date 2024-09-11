@@ -7,8 +7,6 @@ import { loadStripe } from "@stripe/stripe-js";
 
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import connectionString from "./connString";
 
 const stripePromise = loadStripe(
   "pk_test_51Ks9rESGIDSGcSMpqLqYekJ4eUM006ajSr34jPDUouFak7SQHqLMRHRCfK9ueWsO2BFSEuM7xRa0OyFxPi0zH0tp00mrD6E6oS"
@@ -30,7 +28,10 @@ export const Payment = () => {
       token,
     };
     console.log(token);
-    const data = await axios.post(`${connectionString}/post/payment`, body);
+    const data = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/post/payment`,
+      body
+    );
 
     setPayment(true);
   };

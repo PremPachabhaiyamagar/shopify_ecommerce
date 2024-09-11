@@ -5,7 +5,6 @@ import axios from "axios";
 import { useLayoutEffect } from "react";
 import { connect } from "react-redux";
 import { add, getInitial } from "../actions";
-import connectionString from "./connString";
 
 export const AddToCart = (props) => {
   const [post, setPost] = useState([]);
@@ -22,7 +21,9 @@ export const AddToCart = (props) => {
     }
 
     axios
-      .get(`${connectionString}/post/get-single-post/${props.params.id}`)
+      .get(
+        `${process.env.REACT_APP_BACKEND_URL}/post/get-single-post/${props.params.id}`
+      )
       .then((res) => {
         console.log(res.data);
         console.log(res.data.post.price);

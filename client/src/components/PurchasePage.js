@@ -9,7 +9,6 @@ import Loader from "./Loader";
 import { connect } from "react-redux";
 import { getInitial } from "../actions";
 import { useNavigate } from "react-router-dom";
-import connectionString from "./connString";
 
 export const PurchasePage = (props) => {
   const params = useParams();
@@ -28,7 +27,7 @@ export const PurchasePage = (props) => {
   const getPurchasedItems = async () => {
     setLoading(true);
     let data = await axios.get(
-      `${connectionString}/post/get-purchased-goods/${params.id}`
+      `${process.env.REACT_APP_BACKEND_URL}/post/get-purchased-goods/${params.id}`
     );
     setItems(data.data.items);
     setLoading(false);

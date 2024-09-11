@@ -3,7 +3,7 @@ import Header from "./Header";
 import Navbar from "./Navbar";
 import Search from "./Search";
 
-import { useLayoutEffect, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -21,7 +21,6 @@ import {
 import Footer from "./Footer";
 import Loader from "./Loader";
 import { toast } from "react-toastify";
-import connectionString from "./connString";
 
 export const CartPage = (props) => {
   const params = useParams();
@@ -94,7 +93,10 @@ export const CartPage = (props) => {
       params,
     };
 
-    const data = await axios.post(`${connectionString}/post/payment`, body);
+    const data = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/post/payment`,
+      body
+    );
 
     if (data.data.result) {
       props.emptyCart();

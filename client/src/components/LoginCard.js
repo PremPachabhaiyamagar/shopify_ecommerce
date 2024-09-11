@@ -4,9 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../actions";
 import { getInitial } from "../actions";
-import connectionString from "./connString";
 import Loader from "./Loader";
-import axios from "axios";
 
 const LoginCard = (props) => {
   const [email, setEmail] = useState();
